@@ -2,6 +2,11 @@
 
 Small Node.js library to clear a TCP port by terminating the process that uses it.
 
+## Requirements
+
+- macOS or Linux (`lsof` must be available)
+- Windows (`netstat` must be available, included with Windows)
+
 ## Install
 
 ```bash
@@ -32,3 +37,10 @@ npx clean-port 3000 --signal SIGKILL
 - `options.signal` kill signal (default `SIGTERM`)
 
 Returns `{ cleared: boolean, pids: number[] }`.
+
+## Publish to npm
+
+```bash
+npm login
+npm publish
+```

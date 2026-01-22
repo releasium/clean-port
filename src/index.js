@@ -1,13 +1,38 @@
 const { execFileSync } = require("node:child_process");
 
+function getWindowsPidsForPort(portNumber) {
+  const output = execFileSync(
+    "netstat",
+    ["-ano", "-p", "tcp"],
+    { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }
+  );
+
+  return output
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.toUpperCase().startsWith("TCP"))
+    .map((line) => line.split(/\s+/))
+    .filter((parts) => parts.length >= 5)
+    .filter((parts) => {
+      const localAddress = parts[1] || "";
+      return localAddress.endsWith(`:${portNumber}`);
+    })
+    .map((parts) => Number(parts[4]))
+    .filter((value) => Number.isInteger(value));
+}
+
 function getPidsForPort(port) {
   const portNumber = Number(port);
   if (!Number.isInteger(portNumber) || portNumber <= 0) {
     throw new Error(`Invalid port: ${port}`);
   }
 
-  // lsof returns exit code 1 when no processes are found.
   try {
+    if (process.platform === "win32") {
+      return getWindowsPidsForPort(portNumber);
+    }
+
+    // lsof returns exit code 1 when no processes are found.
     const output = execFileSync(
       "lsof",
       ["-ti", `tcp:${portNumber}`],

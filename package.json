@@ -6,8 +6,25 @@
   "exports": {
     ".": "./src/index.js"
   },
+  "keywords": [
+    "port",
+    "ports",
+    "kill-port",
+    "free-port",
+    "clear-port",
+    "kill-process",
+    "pid",
+    "netstat",
+    "lsof",
+    "cli",
+    "devtools",
+    "node",
+    "windows",
+    "macos",
+    "linux"
+  ],
   "bin": {
-    "clean-port": "./bin/clean-port.js"
+    "clean-port": "bin/clean-port.js"
   },
   "engines": {
     "node": ">=18"
