@@ -1,6 +1,6 @@
 {
   "name": "clean-port",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Library to clear a TCP port by terminating the process that uses it.",
   "main": "src/index.js",
   "exports": {
